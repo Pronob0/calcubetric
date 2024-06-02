@@ -90,10 +90,10 @@
 
                     } else {
                         american_odds = Math.abs(american_odds);
-                        alert(american_odds)
+                       
                         decimal_odds = (100 / american_odds) + 1;
                         implied_odds = american_odds / (american_odds + 100);
-                        fractional_odds = '1/' + (100 / american_odds);
+                        fractional_odds = '1/' + ( american_odds/100);
                         
                     }
 
