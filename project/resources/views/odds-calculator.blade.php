@@ -85,13 +85,16 @@
                     var fractional_odds = 0;
                     if (american_odds > 0) {
                         decimal_odds = (american_odds / 100) + 1;
-                        implied_odds = 100 / (american_odds + 100);
+                        implied_odds = 100 / (parseInt(american_odds) + 100);
                         fractional_odds = american_odds > 0 ? (american_odds/100) + '/1' : '-';
 
                     } else {
-                        decimal_odds =  (100 / math.abs(american_odds)) + 1;
-                        implied_odds = math.abs(american_odds) / (math.abs(american_odds) + 100);
-                        fractional_odds = american_odds < 0 ? '1/' + (math.abs(american_odds)/100) : '-';
+                        american_odds = Math.abs(american_odds);
+                        alert(american_odds)
+                        decimal_odds = (100 / american_odds) + 1;
+                        implied_odds = american_odds / (american_odds + 100);
+                        fractional_odds = '1/' + (100 / american_odds);
+                        
                     }
 
                     implied = implied_odds * 100;
