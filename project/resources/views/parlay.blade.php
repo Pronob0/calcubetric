@@ -1,14 +1,14 @@
 <div class="d-flex row">
     <div class="form-group col-md-6 ">
-        <label for="stake">Bet Amount</label>
+        <label for="pbet_amount">Bet Amount</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="" id="pbet_amount">
         </div>
     </div>
     <div class="form-group col-md-6 ">
-        <label class="sel-label" for="stake">Bet Type</label>
+        <label class="sel-label" for="pbet_type">Bet Type</label>
         <div>
-            <select name="bet_type" id="bet_type" class="">
+            <select name="pbet_type" id="pbet_type" class="">
                 <option value="1">SINGLE BET</option>
                 <option value="2">PARLAY</option>
             </select>
@@ -17,9 +17,9 @@
 </div>
 <div class="d-flex mt-4 row">
     <div class="form-group col-md-6 ">
-        <label for="stake">Bet 1</label>
+        <label for="bet1">Bet 1</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="bet" id="bet1">
         </div>
     </div>
     <div class="form-group">
@@ -29,9 +29,9 @@
 
 <div class="d-flex mt-4">
     <div class="form-group">
-        <label for="stake">Bet 2</label>
+        <label for="bet2">Bet 2</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="bet" id="bet2">
         </div>
     </div>
     <div class="form-group">
@@ -39,11 +39,15 @@
     </div>
 </div>
 
+<div class="dve" id="div">
+
+</div>
+
 <div class="d-flex mt-4 row">
     <div class="form-group col-md-6 ">
-        <label for="stake">Bet 3</label>
+        <label for="bet3">Bet 3</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="" id="bet3">
         </div>
     </div>
     <div class="form-group col-md-6 ">
@@ -59,11 +63,11 @@
 
 <div class="mt-4 row">
     <div class="final-result col-md-12">
-        <div class="final-result__to-win">
+        <div class="final-result__to-win ptowin">
             <div>Parlay Odds</div>
             <div class="final-result__amount">+ 100</div>
         </div>
-        <div class="final-result__payout">
+        <div class="final-result__payout ppayout">
             <div>To Win</div>
             <div class="final-result__amount">$ 0.00</div>
         </div>
@@ -76,3 +80,11 @@
         <button class="reset">RESET</button>
     </div>
 </div>
+
+@push('js')
+
+
+
+
+    
+@endpush

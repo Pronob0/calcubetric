@@ -3,13 +3,13 @@
     <div class="form-group col-md-6">
         <label for="stake">Side 1 Odds</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="" id="side1">
         </div>
     </div>
     <div class="form-group col-md-6">
-        <label for="stake">Side 2 Odds</label>
+        <label for="side2">Side 2 Odds</label>
         <div>
-            <input type="text" class="" id="stake">
+            <input type="text" class="" id="side2">
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
     <div class="form-group col-md-6">
         <label for="stake">Hold</label>
         <div class="mt-3 text-center">
-            <label for="stake">200.00 %</label>
+            <label for="hold" id="hhold">200.00 %</label>
         </div>
     </div>
     <div class="form-group col-md-6">

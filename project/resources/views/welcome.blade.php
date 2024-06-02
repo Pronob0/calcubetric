@@ -47,13 +47,13 @@
             
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto odds-calculator active" href="javascript:;">Odds Calculator</a></li>
-                        <li><a class="nav-link scrollto" href="#services">Parlay Calculator</a></li>
-                        <li><a class="nav-link scrollto" href="#about">Odds Converter</a></li>
-                        <li><a class="nav-link scrollto " href="#portfolio">Hedge Calculator</a></li>
-                        <li><a class="nav-link scrollto" href="#team">Hold Calculator</a></li>
-                        <li><a class="nav-link scrollto" href="#pricing">Moneyline Converter</a></li>
-                        <li><a class="nav-link scrollto" href="#contact">Odds Value Calculator</a></li>
+                        <li><a class="nav-link scrollto  active" data-id="1" href="javascript:;">Odds Calculator</a></li>
+                        <li><a class="nav-link scrollto" data-id="2" href="javascript:;">Parlay Calculator</a></li>
+                        <li><a class="nav-link scrollto" data-id="3" href="javascript:;">Odds Converter</a></li>
+                        <li><a class="nav-link scrollto" data-id="4" href="javascript:;">Hedge Calculator</a></li>
+                        <li><a class="nav-link scrollto" data-id="5" href="javascript:;">Hold Calculator</a></li>
+                        <li><a class="nav-link scrollto" data-id="6" href="javascript:;">Moneyline Converter</a></li>
+                        <li><a class="nav-link scrollto" data-id="7" href="javascript:;">Odds Value Calculator</a></li>
                        
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
@@ -88,50 +88,47 @@
                     <div class="col-lg-8 ">
 
                         {{-- odds calculator  --}}
-                        <div class=" odds-cal d-none" style="padding: 10% 20%">
+                        <div class="odds-cal section" id="1" style="padding: 10% 20%">
                             @include('odds-calculator')
                             
                         </div>
                         {{-- odds calculator ends  --}}
 
                         {{-- Parlay calculator  --}}
-                        <div class=" parlay-cal d-none" style="padding: 10% 20%">
+                        <div class=" parlay-cal d-none section" id="2" style="padding: 10% 20%">
                             @include('parlay')
                         </div>
                         {{-- Parlay calculator ends  --}}
 
                         {{-- Odds converter  --}}
-                        <div class="odds-converter d-none" style="padding: 10% 20%">
+                        <div class="odds-converter d-none section" id="3" style="padding: 10% 20%">
                             @include('odds-converter')
                         </div>
                         {{-- Odds converter ends  --}}
 
                         {{-- Hedge calculator  --}}
-                        <div class="hedge-cal d-none" style="padding: 10% 20%">
+                        <div class="hedge-cal d-none section" id="4" style="padding: 10% 20%">
                             @include('hedge')
                         </div>
                         {{-- Hedge calculator ends  --}}
 
                         {{-- Hold calculator  --}}
-                        <div class="hold-cal d-none" style="padding: 10% 20%">
+                        <div class="hold-cal d-none section" id="5" style="padding: 10% 20%">
                             @include('hold')
                         </div> 
                         {{-- Hold calculator ends  --}}
 
                         {{-- Moneyline converter  --}}
-                        <div class="moneyline-converter d-none" style="padding: 10% 20%">
+                        <div class="moneyline-converter d-none section" id="6" style="padding: 10% 20%">
                             @include('moneyline')
                         </div>
                         {{-- Moneyline converter ends  --}}
 
                         {{-- Odds value calculator  --}}\
-                        <div class="odds-value" style="padding: 10% 20%">
+                        <div class="odds-value section" id="7" style="padding: 10% 20%">
                             @include('odd-value')
                         </div>
                         {{-- Odds value calculator ends  --}}
-
-                        
-
 
                     </div>
                 </div>
@@ -148,6 +145,22 @@
 
     <!-- Vendor JS Files -->
     @include('script')
+
+    
+
+
+    <script>
+        $(document).ready(function(){
+            $('.nav-link').click(function(){
+                var id = $(this).data('id');
+                $('.section').addClass('d-none');
+                $('#'+id).removeClass('d-none');
+            });
+        });
+
+    </script>
+
+@stack('js')
    
 
 </body>
