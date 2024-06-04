@@ -24,13 +24,18 @@
     <div class="form-group col-md-6">
         <label class="sel-label" for="stake">Bet Type</label>
         <div>
-            <select name="bet_type" id="bet_type" class="">
+            <select name="bet_type" id="hbet_type" class="">
                 <option value="1">AMERICAN</option>
                 <option value="2">DECIMAL</option>
                 <option value="3">FRACTIONAL</option>
             </select>
         </div>
     </div>
+</div>
+
+{{-- alert  --}}
+<div class="alert alert-danger d-none mt-3" id="halert">
+    <strong>Provide Valid Odds</strong> <span id="hmsg"></span>
 </div>
 
 <div class="row">
@@ -43,46 +48,52 @@
 @push('js')
 
 <script>
-    $(document).ready(function() {
-        $('#side1').on('input', function() {
-            var side1 = $('#side1').val();
-            var side2 = $('#side2').val();
-            var hold = 0;
-            if (side1 && side2) {
-                hold = 100 / (1 / (1 / side1) + 1 / (1 / side2));
-            }
-            $('#hhold').text(hold.toFixed(2) + ' %');
+
+    $(document).ready(function(){
+        
+
+
+        $('#side2').on('keyup', function(){
+
+            var side1 = parseFloat($("#side1").val());
+                var side2 = parseFloat($("#side2").val());
+                var bet_type = $("#hbet_type").val();
+                if(bet_type == 1){
+
+                    // condition for american odds 
+                    if ((side1 > 0  && side1 < 99) ||  (side2 > 0 && side2 < 99)) {
+                        $("#halert").removeClass('d-none');
+                        return;
+                    }
+                    else{
+                        $("#halert").addClass('d-none');
+                    }
+
+                var decimal1 = (side1 > 0) ? (side1 / 100) + 1 : (100 / Math.abs(side1)) + 1;
+                var decimal2 = (side2 > 0) ? (side2 / 100) + 1 : (100 / Math.abs(side2)) + 1;
+                var hold =  ((1 / decimal1) + (1 / decimal2)) -1;
+                console.log(hold);
+                var hold = hold * 100;
+                hold = hold.toFixed(2);
+                $("#hhold").text(hold + "%");
+
+                }
+       
+            
+            
+
+           
         });
 
-        $('#side2').on('input', function() {
-            var side1 = $('#side1').val();
-            var side2 = $('#side2').val();
-            var hold = 0;
-            if (side1 && side2) {
-                hold = 100 / (1 / (1 / side1) + 1 / (1 / side2));
-            }
-            $('#hhold').text(hold.toFixed(2) + ' %');
-        });
-
-        $('#bet_type').on('change', function() {
-            var bet_type = $('#bet_type').val();
-            var hold = $('#hhold').text();
-            if (bet_type == 1) {
-                // convert to american odds 
-                $('#hhold').text(hold + ' %');
-                
-            } else if (bet_type == 2) {
-                $('#hhold').text(hold + ' %');
-            } else if (bet_type == 3) {
-                $('#hhold').text(hold + ' %');
-            }
-        });
-
-        $('.reset').on('click', function() {
-            $('#side1').val('');
-            $('#side2').val('');
-            $('#hhold').text('200.00 %');
-        });
+        
     });
+
+    
+
+
+
+
+</script>
+    
     
 @endpush

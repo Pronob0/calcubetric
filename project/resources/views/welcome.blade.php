@@ -124,8 +124,8 @@
                         </div>
                         {{-- Moneyline converter ends  --}}
 
-                        {{-- Odds value calculator  --}}\
-                        <div class="odds-value section" id="7" style="padding: 10% 20%">
+                        {{-- Odds value calculator  --}}
+                        <div class="odds-value section d-none" id="7" style="padding: 10% 20%">
                             @include('odd-value')
                         </div>
                         {{-- Odds value calculator ends  --}}
@@ -154,6 +154,8 @@
             $('.nav-link').click(function(){
                 var id = $(this).data('id');
                 $('.section').addClass('d-none');
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
                 $('#'+id).removeClass('d-none');
             });
         });

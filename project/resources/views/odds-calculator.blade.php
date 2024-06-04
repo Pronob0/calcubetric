@@ -78,6 +78,8 @@
                 var decimal_odds = $('#decimal_odds').val();
                 var fractional_odds = $('#fractional_odds').val();
                 var implied_odds = $('#implied_odds').val();
+                var win = 0;
+                var payout = 0;
 
                 if (american_odds) {
                     var decimal_odds = 0;
@@ -87,14 +89,18 @@
                         decimal_odds = (american_odds / 100) + 1;
                         implied_odds = 100 / (parseInt(american_odds) + 100);
                         fractional_odds = american_odds > 0 ? (american_odds/100) + '/1' : '-';
+                        win = betamount * (american_odds / 100);
+                        payout = parseInt(win) + parseInt(betamount);
+                        
 
                     } else {
                         american_odds = Math.abs(american_odds);
-                       
                         decimal_odds = (100 / american_odds) + 1;
                         implied_odds = american_odds / (american_odds + 100);
                         fractional_odds = '1/' + ( american_odds/100);
-                        
+                        win = betamount * (100 / american_odds);
+                        payout = parseInt(win) + parseInt(betamount);
+  
                     }
 
                     implied = implied_odds * 100;
@@ -102,22 +108,31 @@
                     $('#decimal_odds').val(decimal_odds.toFixed(2));
                     $('#implied_odds').val(implied.toFixed(2));
                     $('#fractional_odds').val(fractional_odds);
-
-                    var win = 0;
-                    var payout = 0;
-                    if (bet_type == 1) {
-                        win = betamount * (american_odds / 100);
-                        payout = parseFloat(win) + parseFloat(betamount);
-                    } else {
-                        win = betamount * (decimal_odds - 1);
-                        payout = parseFloat(win) + parseFloat(betamount);
-                    }
-
                     $('.final-result__to-win .final-result__amount').text('$ ' + win.toFixed(2));
                     $('.final-result__payout .final-result__amount').text('$ ' + payout.toFixed(2));
                     
                 }
             });
+
+            $('#betamount').on('keyup',function(){
+                var american_odds = $('#american_odds').val();
+                var betamount = $(this).val();
+                var win = 0;
+                var payout = 0;
+                if (american_odds) {
+                    if (american_odds > 0) {
+                        win = betamount * (american_odds / 100);
+                        payout = parseInt(win) + parseInt(betamount);
+                    } else {
+                        american_odds = Math.abs(american_odds);
+                        win = betamount * (100 / american_odds);
+                        payout = parseInt(win) + parseInt(betamount);
+                    }
+                    $('.final-result__to-win .final-result__amount').text('$ ' + win.toFixed(2));
+                    $('.final-result__payout .final-result__amount').text('$ ' + payout.toFixed(2));
+                }
+            });
+           
 
 
 
