@@ -70,28 +70,54 @@
             var returnSide1 = (side1Odds / 100) * 100 + 100;
             var returnSide2 = (side2Odds / 100) * 100 + 100;
 
-        }
-        else if(bet_type == 2){
-            // decimal odds condition  
-            if ((side1Odds > 1  && side1Odds < 100) ||  (side2Odds > 1 && side2Odds < 100)) {
-                $("#halert").removeClass('d-none');
-                return;
-            }
-            else{
-                $("#halert").addClass('d-none');
-            }
-
-        //    calculate hold for decimal odds
-
-            var totalRisk = 200;  // Assuming $100 on each side
-            var returnSide1 = side1Odds + 1;
-            var returnSide2 = side2Odds + 1;
-        }
-        
-
             var averageTotalReturn = (returnSide1 + returnSide2) / 2;
             var holdPercentage = ((totalRisk / averageTotalReturn) - 1) * 100;
             $("#hhold").text(holdPercentage.toFixed(2) + "%");
+
+        }
+        else if(bet_type == 2){
+            // decimal odds condition  
+            if (!isNaN(side1Odds) && !isNaN(side2Odds)) {
+                    var impliedProb1 = 1 / side1Odds;
+                    var impliedProb2 = 1 / side2Odds;
+
+                    var totalImpliedProbability = impliedProb1 + impliedProb2;
+                    var holdPercentage = 1 - totalImpliedProbability;
+                    var holdPercentageInPercent = holdPercentage * 100;
+
+                    $('#hhold').text(holdPercentageInPercent.toFixed(2) + '%');
+                } else {
+                    $("#halert").removeClass('d-none');
+                }
+        }
+
+
+        else if(bet_type == 3){
+            // fractional odds condition
+            // check input is fractional or not 
+            if (side1Odds.includes('/') && side2Odds.includes('/')) {
+                var side1OddsArray = side1Odds.split('/');
+                var side2OddsArray = side2Odds.split('/');
+
+                var side1OddsDecimal = side1OddsArray[0] / side1OddsArray[1] + 1;
+                var side2OddsDecimal = side2OddsArray[0] / side2OddsArray[1] + 1;
+
+                var impliedProb1 = 1 / side1OddsDecimal;
+                var impliedProb2 = 1 / side2OddsDecimal;
+
+                var totalImpliedProbability = impliedProb1 + impliedProb2;
+                var holdPercentage = 1 - totalImpliedProbability;
+                var holdPercentageInPercent = holdPercentage * 100;
+
+                $('#hhold').text(holdPercentageInPercent.toFixed(2) + '%');
+            } else {
+                $("#halert").removeClass('d-none');
+            }
+        }
+
+        
+
+            
 
 
         });
