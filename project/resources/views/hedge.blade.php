@@ -65,18 +65,18 @@
     $('#initialOdds').on('keyup', function(){
         var initialOdds = parseFloat($('#initialOdds').val());
 
-        if(initialOdds < 100  || initialOdds > -100){
+        if(initialOdds < 100  && initialOdds > -100){
             $('#holdalert').removeClass('d-none');
             $('#holdmsg').html('Odds should be greater than 100 or less than -100');
             return;
         }
         else{
             $('#holdalert').addClass('d-none');
-
         }
-    
 
     });
+
+    
 
 $('#initialBetAmount').on('keyup', function(){
     var initialOdds = parseFloat($('#initialOdds').val());
@@ -85,7 +85,6 @@ $('#initialBetAmount').on('keyup', function(){
     var hedgeBetAmount = parseFloat($('#hedgeBetAmount').val());
 
 
- 
 
     if( isNaN(hedgeOdds) || isNaN(hedgeBetAmount)){
         hedgeOdds = 0;
@@ -105,6 +104,33 @@ $('#initialBetAmount').on('keyup', function(){
   
 
 });
+
+
+$('#hedgeOdds').on('keyup', function(){
+        var hedgeOdds = parseFloat($('#hedgeOdds').val());
+        var initialOdds = parseFloat($('#initialOdds').val());
+        var initialBetAmount = parseFloat($('#initialBetAmount').val());
+        var hedgeOdds = parseFloat($('#hedgeOdds').val());
+        var hedgeBetAmount = parseFloat($('#hedgeBetAmount').val());
+
+        if( isNaN(initialOdds) || isNaN(initialBetAmount)){
+            $('#holdalert').removeClass('d-none');
+            $('#holdmsg').html('Please provide initial odds and bet amount');
+            return;
+        
+        }
+
+
+        if(hedgeOdds < 100  && hedgeOdds > -100){
+            $('#holdalert').removeClass('d-none');
+            $('#holdmsg').html('Odds should be greater than 100 or less than -100');
+            return;
+        }
+        else{
+            $('#holdalert').addClass('d-none');
+        }
+    
+    });
 
 </script>
 
