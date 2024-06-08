@@ -49,14 +49,16 @@
 <script>
     $(document).ready(function(){
         
-
+       
 
         $('#side2').on('keyup', function(){
-
-            var side1Odds = parseFloat($('#side1').val());
-            var side2Odds = parseFloat($('#side2').val());
             var bet_type = $("#hbet_type").val();
             if(bet_type == 1){
+            var side1Odds = parseFloat($('#side1').val());
+            var side2Odds = parseFloat($('#side2').val());
+            
+           
+            
 
             if ((side1Odds > 0  && side1Odds < 99) ||  (side2Odds > 0 && side2Odds < 99)) {
                 $("#halert").removeClass('d-none');
@@ -76,16 +78,21 @@
 
         }
         else if(bet_type == 2){
+            var side1Odds = parseFloat($('#side1').val());
+            var side2Odds = parseFloat($('#side2').val());
+            var bet_type = $("#hbet_type").val();
+
             // decimal odds condition  
             if (!isNaN(side1Odds) && !isNaN(side2Odds)) {
                     var impliedProb1 = 1 / side1Odds;
                     var impliedProb2 = 1 / side2Odds;
 
                     var totalImpliedProbability = impliedProb1 + impliedProb2;
-                    var holdPercentage = 1 - totalImpliedProbability;
+                    var holdPercentage = totalImpliedProbability - 1;
                     var holdPercentageInPercent = holdPercentage * 100;
 
                     $('#hhold').text(holdPercentageInPercent.toFixed(2) + '%');
+                    $("#halert").addClass('d-none');
                 } else {
                     $("#halert").removeClass('d-none');
                 }
@@ -93,26 +100,41 @@
 
 
         else if(bet_type == 3){
-            // fractional odds condition
-            // check input is fractional or not 
+            // check input value is fraction or not then calculate the fraction odds 
+            var side1Odds = $('#side1').val();
+            var side2Odds = $('#side2').val();
+            var bet_type = $("#hbet_type").val();
+
+            
             if (side1Odds.includes('/') && side2Odds.includes('/')) {
                 var side1OddsArray = side1Odds.split('/');
                 var side2OddsArray = side2Odds.split('/');
 
-                var side1OddsDecimal = side1OddsArray[0] / side1OddsArray[1] + 1;
-                var side2OddsDecimal = side2OddsArray[0] / side2OddsArray[1] + 1;
+                var numerator1 = parseFloat(side1OddsArray[0]);
+                var denominator1 = parseFloat(side1OddsArray[1]);
+                var numerator2 = parseFloat(side2OddsArray[0]);
+                var denominator2 = parseFloat(side2OddsArray[1]);
 
-                var impliedProb1 = 1 / side1OddsDecimal;
-                var impliedProb2 = 1 / side2OddsDecimal;
+                var decimalOdds1 = 1 + (numerator1 / denominator1);
+                var decimalOdds2 = 1 + (numerator2 / denominator2);
+
+                var impliedProb1 = 1 / decimalOdds1;
+                var impliedProb2 = 1 / decimalOdds2;
 
                 var totalImpliedProbability = impliedProb1 + impliedProb2;
-                var holdPercentage = 1 - totalImpliedProbability;
+                var holdPercentage =  totalImpliedProbability -1;
                 var holdPercentageInPercent = holdPercentage * 100;
 
                 $('#hhold').text(holdPercentageInPercent.toFixed(2) + '%');
+                $("#halert").addClass('d-none');
             } else {
                 $("#halert").removeClass('d-none');
             }
+
+
+
+            
+            
         }
 
         
