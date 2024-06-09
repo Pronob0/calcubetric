@@ -62,8 +62,16 @@
 @push('js')
 <script>
 
-    $('#initialOdds').on('keyup', function(){
+    function allVariables() {
         var initialOdds = parseFloat($('#initialOdds').val());
+        var initialBetAmount = parseFloat($('#initialBetAmount').val());
+        var hedgeOdds = parseFloat($('#hedgeOdds').val());
+        var hedgeBetAmount = parseFloat($('#hedgeBetAmount').val());
+    }
+
+    $('#initialOdds').on('keyup', function(){
+        
+        allVariables();
 
         if(initialOdds < 100  && initialOdds > -100){
             $('#holdalert').removeClass('d-none');
@@ -74,23 +82,24 @@
             $('#holdalert').addClass('d-none');
         }
 
+        if(isNaN(initialBetAmount)){
+            return;
+        }
+
+
     });
 
     
 
 $('#initialBetAmount').on('keyup', function(){
-    var initialOdds = parseFloat($('#initialOdds').val());
-    var initialBetAmount = parseFloat($('#initialBetAmount').val());
-    var hedgeOdds = parseFloat($('#hedgeOdds').val());
-    var hedgeBetAmount = parseFloat($('#hedgeBetAmount').val());
-
-
-
+    allVariables();
+    if( isNaN(initialOdds) || isNaN(initialBetAmount)){
+        return;
+    }
     if( isNaN(hedgeOdds) || isNaN(hedgeBetAmount)){
         hedgeOdds = 0;
         hedgeBetAmount = 0;
     }
-    console.log(initialOdds, initialBetAmount, hedgeOdds, hedgeBetAmount);
 
     var totalHedgeAmount = initialBetAmount + hedgeBetAmount;
     $('#totalBetamount').html('Total Bet Amount  $' + totalHedgeAmount);
@@ -101,17 +110,21 @@ $('#initialBetAmount').on('keyup', function(){
     console.log(initialPayout, hedgePayout, totalPayout);
 
     $('#Tpayout').html('$' + totalPayout.toFixed(2));
+
+    // hedge profit calculate 
+    if(hedgeOdds > 0){
+        var hedgeProfit = totalPayout - totalHedgeAmount;
+    $('#hedgeprofit').html('$' + hedgeProfit.toFixed(2));
+    }
+    
+
   
 
 });
 
 
 $('#hedgeOdds').on('keyup', function(){
-        var hedgeOdds = parseFloat($('#hedgeOdds').val());
-        var initialOdds = parseFloat($('#initialOdds').val());
-        var initialBetAmount = parseFloat($('#initialBetAmount').val());
-        var hedgeOdds = parseFloat($('#hedgeOdds').val());
-        var hedgeBetAmount = parseFloat($('#hedgeBetAmount').val());
+        allVariables();
 
         if( isNaN(initialOdds) || isNaN(initialBetAmount)){
             $('#holdalert').removeClass('d-none');
@@ -119,7 +132,6 @@ $('#hedgeOdds').on('keyup', function(){
             return;
         
         }
-
 
         if(hedgeOdds < 100  && hedgeOdds > -100){
             $('#holdalert').removeClass('d-none');
@@ -129,6 +141,25 @@ $('#hedgeOdds').on('keyup', function(){
         else{
             $('#holdalert').addClass('d-none');
         }
+
+        var initialPayout = initialBetAmount * (initialOdds / 100) + initialBetAmount;
+        var hedgeamount = initialPayout / ((hedgeOdds / 100)+1);
+        $('#hedgeBetAmount').val(hedgeamount.toFixed(2));
+
+        
+
+        
+
+        var totalHedgeAmount = initialBetAmount + hedgeBetAmount;
+    $('#totalBetamount').html('Total Bet Amount  $' + totalHedgeAmount);
+
+     
+
+
+
+
+
+
     
     });
 
