@@ -141,11 +141,6 @@ $('#initialBetAmount').on('keyup', function(){
     
     }
 
-
-    
-
-  
-
 });
 
 
@@ -175,8 +170,13 @@ $('#hedgeOdds').on('keyup', function(){
         var hedgeamount = initialPayout / ((hedgeOdds / 100)+1);
         $('#hedgeBetAmount').val(hedgeamount.toFixed(2));
 
-        var totalHedgeAmount = initialBetAmount + hedgeamount;
-        $('#totalBetamount').html('Total Bet Amount  $' + totalHedgeAmount.toFixed(2));
+       var totalHedgeAmount = initialBetAmount + hedgeBetAmount;
+        $('#totalBetamount').html('Total Bet Amount  $' + totalHedgeAmount);
+
+     
+
+
+
 
 
 
