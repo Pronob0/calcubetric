@@ -65,11 +65,11 @@
     <div class="final-result col-md-12">
         <div class="final-result__to-win ptowin">
             <div>Parlay Odds</div>
-            <div class="final-result__amount">+ 100</div>
+            <div class="final-result__amount" id="poddresult">+ 100</div>
         </div>
         <div class="final-result__payout ppayout">
             <div>To Win</div>
-            <div class="final-result__amount">$ 0.00</div>
+            <div class="final-result__amount" id="winresult">$ 0.00</div>
         </div>
     </div>
 </div>
@@ -83,7 +83,54 @@
 
 @push('js')
 
+<script>
+    $(document).ready(function() {
+        function calculateParlay() {
+            let betAmount = parseFloat($('#pbet_amount').val());
+            let odds = [];
+            $('.bet').each(function() {
+                let betVal = parseFloat($(this).val());
+                if (!isNaN(betVal)) {
+                    odds.push(betVal);
+                }
+            });
+            if (odds.length === 0 || isNaN(betAmount)) {
+                $('#poddresult').text('+ 100');
+                $('#winresult').text('$ 0.00');
+                return;
+            }
+            let parlayOdds = odds.reduce((acc, odd) => acc * (odd > 0 ? (odd / 100 + 1) : (100 / Math.abs(odd) + 1)), 1) - 1;
+            parlayOdds = Math.round(parlayOdds * 100);
+            let toWin = betAmount * (parlayOdds / 100);
+            $('#poddresult').text(parlayOdds > 0 ? `+ ${parlayOdds}` : parlayOdds);
+            $('#winresult').text(`$ ${toWin.toFixed(2)}`);
+        }
 
+        $('.bet, #pbet_amount').on('keyup', calculateParlay);
+
+        $('.reset').on('click', function() {
+            $('#pbet_amount').val('');
+            $('.bet').val('');
+            $('#poddresult').text('+ 100');
+            $('#winresult').text('$ 0.00');
+        });
+
+        $('.add-btn').on('click', function() {
+            let newBet = `<div class="d-flex mt-4">
+                            <div class="form-group col-md-6">
+                                <label for="bet${$('.bet').length + 1}">Bet ${$('.bet').length + 1}</label>
+                                <div>
+                                    <input type="text" class="form-control bet" id="bet${$('.bet').length + 1}">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <!-- Empty div for layout purposes -->
+                            </div>
+                          </div>`;
+            $('#div').append(newBet);
+        });
+    });
+</script>
 
 
     

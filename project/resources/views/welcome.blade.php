@@ -95,7 +95,7 @@
                         {{-- odds calculator ends  --}}
 
                         {{-- Parlay calculator  --}}
-                        <div class=" parlay-cal d-none section" id="2" style="padding: 10% 20%">
+                        <div class="parlay-cal d-none section" id="2" style="padding: 10% 20%">
                             @include('parlay')
                         </div>
                         {{-- Parlay calculator ends  --}}
@@ -158,6 +158,23 @@
                 $(this).addClass('active');
                 $('#'+id).removeClass('d-none');
             });
+
+            $('#bet_type').change(function(){
+                var val = $(this).val();
+                if(val == 2){
+                    $('.odds-cal').addClass('d-none');
+                    $('.parlay-cal').removeClass('d-none');
+                }
+             });
+
+             $('#pbet_type').change(function(){
+                var val = $(this).val();
+                if(val == 1){
+                    $('.parlay-cal').addClass('d-none');
+                    $('.odds-cal').removeClass('d-none');
+                }
+             });
+
         });
 
     </script>
